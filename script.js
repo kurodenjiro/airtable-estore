@@ -32,7 +32,7 @@ function generateCard(name, description, imageUrl, price) {
 
 const productContainer = document.getElementById('product-container')
 
-productContainer.innerHTML = 'Loading...'
+productContainer.innerHTML = `<div class="mx-auto lds-css ng-scope"><div style="width:100%;height:100%" class="lds-facebook"><div></div><div></div><div></div></div></div>`
 
 fetch('https://api.airtable.com/v0/appNo7KHnVGi4EsXv/Products', {
   headers: {
