@@ -1,3 +1,15 @@
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault()
+      console.log('scrolling!')
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      })
+    })
+  })
+}
+
 function generateCard(name, description, imageUrl, price) {
   return `
   <div class="col-md-4">
@@ -8,7 +20,7 @@ function generateCard(name, description, imageUrl, price) {
         <p class="card-text">${description}</p>
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">
-            <a href="#form-container" class="btn btn-sm btn-outline-secondary">BUY NOW</a>
+            <a id="buy-btn" href="#form-container" class="btn btn-sm btn-outline-secondary">BUY NOW</a>
           </div>
           <small class="text-main">RM${price}</small>
         </div>
@@ -27,23 +39,27 @@ fetch('https://api.airtable.com/v0/appNo7KHnVGi4EsXv/Products', {
     Authorization: 'Bearer key23F8r22FJ7DNvk'
   }
 })
-.then(function(response) {
-  return response.json()
-})
-.then(function(result) {
-  console.log(result.records)
-  let htmlContent = ''
-
-  result.records.forEach(function(record) {
-    console.table(record)
-    let imgUrl
-    if (record.fields.Picture) {
-      imgUrl = record.fields.Picture[0].url
-    } else {
-      imgUrl = 'https://picsum.photos/200'
-    }
-    htmlContent += generateCard(record.fields.Product, record.fields.Description, imgUrl, record.fields.Price)
+  .then(function(response) {
+    return response.json()
   })
+  .then(function(result) {
+    let htmlContent = ''
 
-  productContainer.innerHTML = htmlContent
-})
+    result.records.forEach(function(record) {
+      let imgUrl
+      if (record.fields.Picture) {
+        imgUrl = record.fields.Picture[0].url
+      } else {
+        imgUrl = 'https://picsum.photos/200'
+      }
+      htmlContent += generateCard(
+        record.fields.Product,
+        record.fields.Description,
+        imgUrl,
+        record.fields.Price
+      )
+    })
+
+    productContainer.innerHTML = htmlContent
+    initSmoothScroll()
+  })
