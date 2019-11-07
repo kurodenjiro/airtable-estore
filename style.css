@@ -1,0 +1,23 @@
+body {
+  font-family: 'Quicksand', sans-serif;
+}
+
+.text-main {
+  color: #d46d64 !important;
+}
+
+.jumbotron {
+  background: #fff6d5;
+}
+
+.jumobotron p {
+  color: #3c3c3c;
+}
+
+#hero-logo {
+  height: 80px;
+}
+
+footer a {
+  color: #d46d64 !important;
+}
